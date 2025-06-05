@@ -25,7 +25,16 @@ model Tcode {
   sortOrder Int?     @default(0)
   slides    Json
 
-  subscriptions Subscription[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  userId     String?
+  senderType String       // "user" | "system"
+  tags       String   // store as "tag1,tag2,tag3"
+  content    String
+  props      Json?
+  createdAt  DateTime @default(now())
 }
 
 model Subscription {
@@ -36,7 +45,5 @@ model Subscription {
   startDate        DateTime
   durationDays     Int
   status           String
-
   user  User  @relation(fields: [userId], references: [id])
-  tcode Tcode @relation(fields: [tcodeId], references: [id])
 }

@@ -1,24 +1,24 @@
-import express from 'express';
+// src/routes/tcodes.js
+import { createCrudRouter } from '../utils/createCrudRouter.js';
 import { PrismaClient } from '@prisma/client';
+import { z } from 'zod';
 
-const router = express.Router();
 const prisma = new PrismaClient();
 
-// List all tcodes (optionally filtered)
-router.get('/', async (req, res) => {
-  const tcodes = await prisma.tcode.findMany({
-    orderBy: { sortOrder: 'asc' }
-  });
-  res.json(tcodes);
+const TcodeSchema = z.object({
+  id: z.number(),
+  tcode: z.string(),
+  chapter: z.number(),
+  exercise: z.number(),
+  question: z.string(),
+  // Add more fields as per your model
 });
 
-// Get one tcode by ID
-router.get('/:id', async (req, res) => {
-  const tcode = await prisma.tcode.findUnique({
-    where: { id: req.params.id }
-  });
-  if (!tcode) return res.status(404).json({ error: 'Tcode not found' });
-  res.json(tcode);
+const router = createCrudRouter({
+  model: prisma.tcode,
+  schema: TcodeSchema,
+  basePath: '/',
+  routes: { get: true, post: false, put: false, delete: false }
 });
 
 export default router;

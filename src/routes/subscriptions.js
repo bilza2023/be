@@ -30,22 +30,22 @@ router.get('/', authenticate, async (req, res) => {
 });
 
 // Subscribe to a tcode
-router.post('/', authenticate, async (req, res) => {
-  const { tcodeId, subscriptionType, durationDays } = req.body;
-  const startDate = new Date();
+// router.post('/', authenticate, async (req, res) => {
+//   const { tcodeId, subscriptionType, durationDays } = req.body;
+//   const startDate = new Date();
 
-  const sub = await prisma.subscription.create({
-    data: {
-      userId: req.userId,
-      tcodeId,
-      subscriptionType,
-      startDate,
-      durationDays,
-      status: 'active'
-    }
-  });
+//   const sub = await prisma.subscription.create({
+//     data: {
+//       userId: req.userId,
+//       tcodeId,
+//       subscriptionType,
+//       startDate,
+//       durationDays,
+//       status: 'active'
+//     }
+//   });
 
-  res.json(sub);
-});
+//   res.json(sub);
+// });
 
 export default router;

@@ -1,10 +1,12 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
+import messageRoutes from './src/routes/messages.js';
+import userRoutes from './src/routes/users.js';
+import subscriptionRoutes from './src/routes/subscriptions.js';
+import cors from 'cors';
+import tcodeRoutes from './src/routes/tcodes.js';
 
-import userRoutes from './routes/users.js';
-import tcodeRoutes from './routes/tcodes.js';
-import subscriptionRoutes from './routes/subscriptions.js';
 
 dotenv.config();
 const app = express();
@@ -13,9 +15,11 @@ const prisma = new PrismaClient();
 app.use(express.json());
 
 // Attach routes
+app.use(cors());
 app.use('/users', userRoutes);
-app.use('/tcodes', tcodeRoutes);
+app.use('/messages', messageRoutes);
 app.use('/subscriptions', subscriptionRoutes);
+app.use('/tcodes', tcodeRoutes);
 
 // Health check
 app.get('/', (req, res) => {
