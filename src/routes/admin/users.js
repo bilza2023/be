@@ -1,23 +1,26 @@
-
 // src/routes/admin/users.js
-import { createCrudRouter } from '../../utils/createCrudRouter.js';
+import express from 'express';
 import { PrismaClient } from '@prisma/client';
-import { z } from 'zod';
+// import { UserSchema } from '../../prisma/zod.js';
+import {
+  parseFilters,
+  validateWith,
+  respondOk,
+  respondError
+} from '../../utils/restUtils.js';
 
 const prisma = new PrismaClient();
+const router = express.Router();
 
-const UserSchema = z.object({
-  id: z.number().optional(),
-  email: z.string().email(),
-  passwordHash: z.string(),
-  createdAt: z.date().optional()
-});
-
-const router = createCrudRouter({
-  model: prisma.user,
-  schema: UserSchema,
-  basePath: '/',
-  routes: { get: true, post: false, put: false, delete: false }
+// GET /admin/users
+router.get('/', async (req, res) => {
+  try {
+    const filters = parseFilters(req.query);
+    const items = await prisma.user.findMany({ where: filters });
+    respondOk(res, items);
+  } catch (err) {
+    respondError(res, err, 500);
+  }
 });
 
 export default router;
