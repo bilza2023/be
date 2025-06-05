@@ -6,11 +6,10 @@ import userRoutes from './src/routes/users.js';
 import subscriptionRoutes from './src/routes/subscriptions.js';
 import cors from 'cors';
 import tcodeRoutes from './src/routes/tcodes.js';
-
+import adminRoutes from './src/routes/admin/index.js';
 
 dotenv.config();
 const app = express();
-const prisma = new PrismaClient();
 
 app.use(express.json());
 
@@ -20,7 +19,7 @@ app.use('/users', userRoutes);
 app.use('/messages', messageRoutes);
 app.use('/subscriptions', subscriptionRoutes);
 app.use('/tcodes', tcodeRoutes);
-
+app.use('/admin', adminRoutes);
 // Health check
 app.get('/', (req, res) => {
   res.send('Workshop backend is running');
