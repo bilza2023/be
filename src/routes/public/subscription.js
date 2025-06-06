@@ -1,7 +1,8 @@
-import express from 'express';
-import { Subscription } from '../../../mongo/models.js';
-import { verifyToken }  from '../../lib/jwt.js';
-import { respondOk, respondError } from '../../utils/restUtils.js';
+const express = require('express');
+const { Subscription } = require('../../../mongo/models');
+const { verifyToken } = require('../../lib/jwt');
+const { respondOk, respondError } = require('../../utils/restUtils');
+
 
 const router = express.Router();
 
@@ -29,4 +30,4 @@ router.get('/subscription', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,9 +1,9 @@
 // src/routes/admin/index.js
-import express from 'express';
-import tcodes from './tcodes.js';
-import messages from './messages.js';
-import users from './users.js';
-import subscriptions from './subscriptions.js';
+const express = require('express');
+const tcodes = require('./tcodes');
+const messages = require('./messages');
+const users = require('./users');
+const subscriptions = require('./subscriptions');
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.use('/messages', messages);
 router.use('/users', users);
 router.use('/subscriptions', subscriptions);
 
-export default router;
+module.exports = router;

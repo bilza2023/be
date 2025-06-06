@@ -1,6 +1,6 @@
-import express from 'express';
-import { Tcode } from '../../../mongo/models.js';
-import { respondOk, respondNotFound, respondError } from '../../utils/restUtils.js';
+const express = require('express');
+const { Tcode } = require('../../../mongo/models');
+const { respondOk, respondNotFound, respondError } = require('../../utils/restUtils');
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

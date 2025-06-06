@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 //
 // 📘 User
@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   passwordHash: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
-export const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 //
 // 📘 Tcode
@@ -21,7 +21,7 @@ const TcodeSchema = new mongoose.Schema({
   sortOrder: { type: Number },
   slides: { type: mongoose.Schema.Types.Mixed }
 });
-export const Tcode = mongoose.model('Tcode', TcodeSchema);
+const Tcode = mongoose.model('Tcode', TcodeSchema);
 
 //
 // 📘 Message
@@ -34,7 +34,7 @@ const MessageSchema = new mongoose.Schema({
   props: { type: mongoose.Schema.Types.Mixed },
   createdAt: { type: Date, default: Date.now }
 });
-export const Message = mongoose.model('Message', MessageSchema);
+const Message = mongoose.model('Message', MessageSchema);
 
 //
 // 📘 Subscription
@@ -47,4 +47,14 @@ const SubscriptionSchema = new mongoose.Schema({
   durationDays: { type: Number },
   status: { type: String }
 });
-export const Subscription = mongoose.model('Subscription', SubscriptionSchema);
+const Subscription = mongoose.model('Subscription', SubscriptionSchema);
+
+//
+// ✅ Export all
+//
+module.exports = {
+  User,
+  Tcode,
+  Message,
+  Subscription
+};

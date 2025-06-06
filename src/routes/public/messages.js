@@ -1,7 +1,8 @@
-import express from 'express';
-import { Message }       from '../../../mongo/models.js';
-import { MessageSchema } from '../../../mongo/zod.js';
-import { validateWith, respondCreated, respondError } from '../../utils/restUtils.js';
+const express = require('express');
+const { Message } = require('../../../mongo/models');
+const { MessageSchema } = require('../../../mongo/zod');
+const { validateWith, respondCreated, respondError } = require('../../utils/restUtils');
+
 
 const router = express.Router();
 
@@ -16,4 +17,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,14 +1,15 @@
 // src/schema/zod.js
-import { z } from 'zod';
 
-export const UserSchema = z.object({
+const z = require('zod');
+
+const UserSchema = z.object({
   id: z.string().optional(),
   email: z.string().email(),
   passwordHash: z.string(),
   createdAt: z.date().optional()
 });
 
-export const TcodeSchema = z.object({
+const TcodeSchema = z.object({
   id: z.string().optional(),
   tcode: z.string(),
   chapter: z.number(),
@@ -18,7 +19,7 @@ export const TcodeSchema = z.object({
   slides: z.any()
 });
 
-export const MessageSchema = z.object({
+const MessageSchema = z.object({
   id: z.string().optional(),
   userId: z.string().optional(),
   senderType: z.string(),
@@ -28,7 +29,7 @@ export const MessageSchema = z.object({
   createdAt: z.date().optional()
 });
 
-export const SubscriptionSchema = z.object({
+const SubscriptionSchema = z.object({
   id: z.string().optional(),
   userId: z.string(),
   tcodeId: z.string(),
@@ -37,3 +38,10 @@ export const SubscriptionSchema = z.object({
   durationDays: z.number(),
   status: z.string()
 });
+
+module.exports = {
+  UserSchema,
+  TcodeSchema,
+  MessageSchema,
+  SubscriptionSchema
+};

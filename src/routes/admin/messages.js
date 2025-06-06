@@ -1,15 +1,16 @@
 // src/routes/admin/messages.js
-import express from 'express';
-import { Message } from '../../../mongo/models.js';
-import { MessageSchema } from '../../../mongo/zod.js';
-import {
+const express = require('express');
+const { Message } = require('../../../mongo/models');
+const { MessageSchema } = require('../../../mongo/zod');
+const {
   parseFilters,
   validateWith,
   respondOk,
   respondCreated,
   respondError,
   respondNotFound
-} from '../../utils/restUtils.js';
+} = require('../../utils/restUtils');
+
 
 const router = express.Router();
 
@@ -56,4 +57,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;
+module.exports =  router;

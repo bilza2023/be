@@ -1,11 +1,12 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
 
-import { connectToMongo } from './mongo/index.js';
+const connectToMongo = require('./mongo/index');
 
-import adminRoutes from './src/routes/admin/index.js';
-import publicRoutes from './src/routes/public/index.js';
+const adminRoutes = require('./src/routes/admin/index');
+const publicRoutes = require('./src/routes/public/index');
+
 
 dotenv.config();
 const app = express();
@@ -32,4 +33,4 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 
-export default app;
+module.exports =  {app};

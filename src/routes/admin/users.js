@@ -1,11 +1,11 @@
 // src/routes/admin/users.js
-import express from 'express';
-import { User } from '../../../mongo/models.js';
-import {
+const express = require('express');
+const { User } = require('../../../mongo/models');
+const {
   parseFilters,
   respondOk,
   respondError
-} from '../../utils/restUtils.js';
+} = require('../../utils/restUtils');
 
 const router = express.Router();
 
@@ -20,4 +20,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

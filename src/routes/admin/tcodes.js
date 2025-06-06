@@ -1,8 +1,8 @@
 // src/routes/admin/tcodes.js
-import express from 'express';
-import { Tcode } from '../../../mongo/models.js';
-import { TcodeSchema } from '../../../mongo/zod.js';
-import {
+const express = require('express');
+const { Tcode } = require('../../../mongo/models');
+const { TcodeSchema } = require('../../../mongo/zod');
+const {
   parseFilters,
   validateWith,
   respondOk,
@@ -10,7 +10,7 @@ import {
   respondError,
   respondNotFound,
   logAdminAction
-} from '../../utils/restUtils.js';
+} = require('../../utils/restUtils');
 
 const router = express.Router();
 
@@ -59,4 +59,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;
+module.exports  =  router;

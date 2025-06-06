@@ -1,15 +1,16 @@
 // src/routes/admin/subscriptions.js
-import express from 'express';
-import { Subscription } from '../../../mongo/models.js';
-import { SubscriptionSchema } from '../../../mongo/zod.js';
-import {
+const express = require('express');
+const { Subscription } = require('../../../mongo/models');
+const { SubscriptionSchema } = require('../../../mongo/zod');
+const {
   parseFilters,
   validateWith,
   respondOk,
   respondCreated,
   respondError,
   logAdminAction
-} from '../../utils/restUtils.js';
+} = require('../../utils/restUtils');
+
 
 const router = express.Router();
 
@@ -58,4 +59,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

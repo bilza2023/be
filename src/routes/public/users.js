@@ -1,10 +1,11 @@
-import express from 'express';
-import bcrypt from 'bcrypt';
-import { User } from '../../../mongo/models.js';
-import { UserSchema } from '../../../mongo/zod.js';
+const express = require('express');
+const bcrypt = require('bcrypt');
+const { User } = require('../../../mongo/models');
+const { UserSchema } = require('../../../mongo/zod');
 
-import { issueToken, verifyToken } from '../../lib/jwt.js';
-import { respondOk, respondCreated, respondError } from '../../utils/restUtils.js';
+const { issueToken, verifyToken } = require('../../lib/jwt');
+const { respondOk, respondCreated, respondError } = require('../../utils/restUtils');
+
 
 const router = express.Router();
 
@@ -57,4 +58,4 @@ router.get('/me', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
