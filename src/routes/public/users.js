@@ -10,15 +10,22 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const data = UserSchema.omit({ id: true, createdAt: true }).parse(req.body);
-    const passwordHash = await bcrypt.hash(data.password, 10);
-    const user = await User.create({ email: data.email, passwordHash });
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = await User.create({ email, passwordHash });
     const token = issueToken(user._id);
+
     respondCreated(res, { token });
   } catch (err) {
     respondError(res, err);
   }
 });
+
 
 router.post('/login', async (req, res) => {
   try {

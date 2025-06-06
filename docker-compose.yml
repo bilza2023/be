@@ -1,12 +1,40 @@
 
-
 services:
-  backend:
+  app:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
     environment:
-      - NODE_ENV=production
-      - JWT_SECRET=your-dev-secret
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://taleemAdmin:bils32611246950@mongo:27017/taleemDB?authSource=taleemDB
+      - JWT_SECRET=supersecret123
+      - ADMIN_SECRET=workshop-super-secret
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: taleemAdmin
+      MONGO_INITDB_ROOT_PASSWORD: bils32611246950
+      MONGO_INITDB_DATABASE: taleemDB
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
+
+
+
+# sudo docker run -d \
+#   --name taleem-mongo \
+#   -p 27017:27017 \
+#   -e MONGO_INITDB_ROOT_USERNAME=taleemAdmin \
+#   -e MONGO_INITDB_ROOT_PASSWORD=bils32611246950 \
+#   -e MONGO_INITDB_DATABASE=taleemDB \
+#   -v mongo_data:/data/db \
+#   mongo:6.0
