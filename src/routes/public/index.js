@@ -6,9 +6,9 @@ import subscription from './subscription.js';
 
 const router = express.Router();
 
-router.use('/users', users);
-router.use('/tcodes', tcodes);
-router.use('/messages', messages);
-router.use('/me', subscription);
+router.use('/users', users);         // Registration, login, profile
+router.use('/tcodes', tcodes);       // Slide or lesson content
+router.use('/messages', messages);   // User/system message logging
+router.use('/me', subscription);     // Subscription check
 
 export default router;

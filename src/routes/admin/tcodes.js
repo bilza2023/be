@@ -1,7 +1,7 @@
 // src/routes/admin/tcodes.js
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import { TcodeSchema } from '../../../prisma/zod.js';
+import { Tcode } from '../../../mongo/models.js';
+import { TcodeSchema } from '../../../mongo/zod.js';
 import {
   parseFilters,
   validateWith,
@@ -12,14 +12,13 @@ import {
   logAdminAction
 } from '../../utils/restUtils.js';
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 // GET /admin/tcodes
 router.get('/', async (req, res) => {
   try {
     const filters = parseFilters(req.query);
-    const items = await prisma.tcode.findMany({ where: filters });
+    const items = await Tcode.find(filters);
     respondOk(res, items);
   } catch (err) {
     respondError(res, err, 500);
@@ -30,7 +29,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const data = validateWith(TcodeSchema, req.body);
-    const created = await prisma.tcode.create({ data });
+    const created = await Tcode.create(data);
     logAdminAction('/admin/tcodes', 'POST', created);
     respondCreated(res, created);
   } catch (err) {
@@ -42,10 +41,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const data = validateWith(TcodeSchema, req.body);
-    const updated = await prisma.tcode.update({
-      where: { id: req.params.id },
-      data
-    });
+    const updated = await Tcode.findByIdAndUpdate(req.params.id, data, { new: true });
     logAdminAction('/admin/tcodes', 'PUT', updated);
     respondOk(res, updated);
   } catch (err) {
@@ -56,7 +52,7 @@ router.put('/:id', async (req, res) => {
 // DELETE /admin/tcodes/:id
 router.delete('/:id', async (req, res) => {
   try {
-    await prisma.tcode.delete({ where: { id: req.params.id } });
+    await Tcode.findByIdAndDelete(req.params.id);
     res.status(204).end();
   } catch (err) {
     respondError(res, err, 500);

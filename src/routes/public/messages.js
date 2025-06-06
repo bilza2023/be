@@ -1,17 +1,15 @@
-
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import { MessageSchema } from '../../../prisma/zod.js';
+import { Message }       from '../../../mongo/models.js';
+import { MessageSchema } from '../../../mongo/zod.js';
 import { validateWith, respondCreated, respondError } from '../../utils/restUtils.js';
-////////////////////////////
-const prisma = new PrismaClient();
+
 const router = express.Router();
 
+// POST /messages
 router.post('/', async (req, res) => {
   try {
-
     const data = validateWith(MessageSchema, req.body);
-    const created = await prisma.message.create({ data });
+    const created = await Message.create(data);
     respondCreated(res, created);
   } catch (err) {
     respondError(res, err);

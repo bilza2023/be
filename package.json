@@ -5,25 +5,23 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-  "dev": "node --watch ./index.js",
-  "start": "node ./index.js",
-  "test": "NODE_ENV=test node tests/main.test.js",
-  "test:admin": "NODE_ENV=test node tests/admin/index.test.js",
-  "test:public": "NODE_ENV=test node tests/public/index.test.js"
+    "dev": "node --watch ./index.js",
+    "start": "node ./index.js",
+    "test": "NODE_ENV=test node tests/main.test.js",
+    "test:admin": "NODE_ENV=test node tests/admin/index.test.js",
+    "test:public": "NODE_ENV=test node tests/public/index.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^6.9.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^6.9.0",
+    "mongoose": "^8.15.1",
     "resend": "^4.5.1",
-    "sqlite3": "^5.1.7",
     "zod": "^3.25.49"
   },
   "devDependencies": {

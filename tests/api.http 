@@ -1,0 +1,34 @@
+### Register a new user
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "passwordHash": "testpass"
+}
+
+### Login
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "testpass"
+}
+
+### Get my profile
+GET http://localhost:3000/users/me
+Authorization: Bearer {{token}}
+
+### Get tcodes
+GET http://localhost:3000/tcodes/test-tcode-001
+
+### Post message
+POST http://localhost:3000/messages
+Content-Type: application/json
+
+{
+  "senderType": "user",
+  "content": "hello from REST",
+  "tags": "rest-client"
+}

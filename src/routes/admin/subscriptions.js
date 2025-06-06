@@ -1,25 +1,23 @@
 // src/routes/admin/subscriptions.js
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import { SubscriptionSchema } from '../../../prisma/zod.js';
+import { Subscription } from '../../../mongo/models.js';
+import { SubscriptionSchema } from '../../../mongo/zod.js';
 import {
   parseFilters,
   validateWith,
   respondOk,
   respondCreated,
   respondError,
-  respondNotFound,
   logAdminAction
 } from '../../utils/restUtils.js';
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 // GET /admin/subscriptions
 router.get('/', async (req, res) => {
   try {
     const filters = parseFilters(req.query);
-    const items = await prisma.subscription.findMany({ where: filters });
+    const items = await Subscription.find(filters);
     respondOk(res, items);
   } catch (err) {
     respondError(res, err, 500);
@@ -30,7 +28,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const data = validateWith(SubscriptionSchema, req.body);
-    const created = await prisma.subscription.create({ data });
+    const created = await Subscription.create(data);
     logAdminAction('/admin/subscriptions', 'POST', created);
     respondCreated(res, created);
   } catch (err) {
@@ -42,10 +40,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const data = validateWith(SubscriptionSchema, req.body);
-    const updated = await prisma.subscription.update({
-      where: { id: req.params.id },
-      data
-    });
+    const updated = await Subscription.findByIdAndUpdate(req.params.id, data, { new: true });
     logAdminAction('/admin/subscriptions', 'PUT', updated);
     respondOk(res, updated);
   } catch (err) {
@@ -56,7 +51,7 @@ router.put('/:id', async (req, res) => {
 // DELETE /admin/subscriptions/:id
 router.delete('/:id', async (req, res) => {
   try {
-    await prisma.subscription.delete({ where: { id: req.params.id } });
+    await Subscription.findByIdAndDelete(req.params.id);
     res.status(204).end();
   } catch (err) {
     respondError(res, err, 500);
