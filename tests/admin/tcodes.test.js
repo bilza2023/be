@@ -1,11 +1,11 @@
-// tests/test_tcodes_crud.js
-import { runRestCrudTest } from './restTester.js';
+import { runRestCrudTest } from '../restTester.js';
 
 export async function run() {
+  const uniqueId = `test-tcode-${Date.now()}`;
   await runRestCrudTest({
     route: '/admin/tcodes',
     sample: {
-      id: 'test-tcode-001',
+      id: uniqueId,
       tcode: 'fbise9math',
       chapter: 1,
       exercise: '1.1',
@@ -15,6 +15,6 @@ export async function run() {
       sortOrder: 999,
       slides: { type: 'text', content: 'hello raw test' }
     },
-    headers: { 'x-admin-secret': 'your-secret' }
+    headers: { 'x-admin-secret': process.env.ADMIN_SECRET || 'your-secret' }
   });
 }

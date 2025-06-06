@@ -1,15 +1,20 @@
-// tests/restTester.js
 import request from 'supertest';
 import app from '../index.js';
 
 export async function runRestCrudTest({ route, sample, headers = {}, key = 'id' }) {
-  const testId = sample[key] || `test-${Date.now()}`;
-  const testData = { ...sample, [key]: testId };
-  const updatedData = { ...testData, title: (testData.title || 'Updated') + ' (updated)' };
+  const testId = sample[key];
+  if (!testId) throw new Error(`Sample must contain key: ${key}`);
+
+  const testData = { ...sample };
+  const updatedData = {
+    ...testData,
+    title: (testData.title || 'Updated') + ' (updated)',
+  };
 
   console.log(`\n🧪 Testing CRUD for ${route}...`);
 
   // Create
+  console.log(`📛 Using test ID: ${testId}`);
   const postRes = await request(app)
     .post(route)
     .set(headers)
@@ -43,19 +48,7 @@ export async function runRestCrudTest({ route, sample, headers = {}, key = 'id' 
   const confirmRes = await request(app)
     .get(`${route}?${key}=${testId}`)
     .set(headers);
-  if (confirmRes.statusCode !== 200 || confirmRes.body.length !== 0) throw new Error(`Confirm GET failed: ${confirmRes.text}`);
+  if (confirmRes.statusCode !== 200 || confirmRes.body.length !== 0)
+    throw new Error(`Confirm GET failed: ${confirmRes.text}`);
   console.log('✅ Confirm Deletion passed');
-}
-
-export async function runBulkInsertTest({ route, samples, headers = {} }) {
-  console.log(`\n🧪 Testing bulk insert for ${route}...`);
-  const postRes = await request(app)
-    .post(route)
-    .set(headers)
-    .send(samples);
-
-  if (postRes.statusCode !== 201 && postRes.statusCode !== 200) {
-    throw new Error(`Bulk POST failed: ${postRes.text}`);
-  }
-  console.log('✅ Bulk POST passed');
 }
