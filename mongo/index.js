@@ -1,16 +1,20 @@
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
 
-// const MONGO_URI = 'mongodb://taleemAdmin:bils32611246950@mongo:27017/taleemDB?authSource=admin';
-const MONGO_URI = 'mongodb://taleemAdmin:bils32611246950@localhost:27017/taleemDB?authSource=admin';
+dotenv.config();
 
+
+const MONGO_URI = process.env.MONGO_URI;
 async function connectToMongo() {
-  try {
-    await mongoose.connect(MONGO_URI);
-    console.log('✅ MongoDB connected');
-  } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
+  if (!MONGO_URI) {
+    throw new Error('MONGO_URI is not defined');
+  }
+
+  await mongoose.connect(MONGO_URI);
+
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(`✅ MongoDB connected: ${MONGO_URI}`);
   }
 }
 

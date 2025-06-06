@@ -1,5 +1,5 @@
-const express = require('express');
 const dotenv = require('dotenv');
+const express = require('express');
 const cors = require('cors');
 
 const connectToMongo = require('./mongo/index');
@@ -23,14 +23,16 @@ app.get('/', (req, res) => {
   res.send('Workshop backend is running');
 });
 
-if (process.env.NODE_ENV !== 'test') {
-  connectToMongo().then(() => {
+// Always connect to Mongo
+connectToMongo().then(() => {
+  if (process.env.NODE_ENV !== 'test') {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-  });
-}
+  }
+});
+
 
 
 module.exports =  {app};
