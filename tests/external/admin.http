@@ -1,0 +1,23 @@
+### ✅ Admin fetches all messages
+GET http://localhost:3000/admin/messages
+x-admin-secret:workshop-super-secret
+
+
+### ✅ Admin deletes a specific message (paste ID manually)
+DELETE http://localhost:3000/admin/messages/6843e3d8e7b3de31e5ce672b
+x-admin-secret: workshop-super-secret
+
+
+### ✅ Admin updates a message
+PUT http://localhost:3000/admin/messages/6843e92d3021f0f7a1d8842c
+Content-Type: application/json
+x-admin-secret: workshop-super-secret
+
+{
+  "senderType": "user",
+  "content": "Updated by admin via REST Client",
+  "tags": "admin,edit",
+  "props": {
+    "origin": "manual_update"
+  }
+}

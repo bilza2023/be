@@ -3,7 +3,7 @@ POST http://localhost:3000/users/register
 Content-Type: application/json
 
 {
-  "email": "demo1@example.com",
+  "email": "demo2@example.com",
   "password": "pass1234"
 }
 
@@ -12,18 +12,18 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-  "email": "demo1@example.com",
+  "email": "demo2@example.com",
   "password": "pass1234"
 }
 
 ### Send message (paste token manually after login)
 POST http://localhost:3000/messages
 Content-Type: application/json
-Authorization: Bearer <paste_token_here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQzZTMzZWU3YjNkZTMxZTVjZTY3MjQiLCJpYXQiOjE3NDkyNzk1NTAsImV4cCI6MTc0OTg4NDM1MH0.to0ncfx4Rr7R54Xg4r_z_lPwuso_5d6WJsjU6oYihNY
 
 {
   "senderType": "user",
-  "content": "Hello from .http!",
+  "content": "Hello from .http!!!!",
   "tags": "external,restclient",
   "props": {
     "origin": "vs_code"
