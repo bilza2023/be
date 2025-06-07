@@ -9,15 +9,16 @@
     "dev:db": "sudo docker run --rm -p 27017:27017 mongo",
     "test": "dotenv -e .env.test -- jest  --runInBand"
   },
-"jest": {
-  "globalTeardown": "./tests/teardown.js",
-  "testEnvironment": "node"
-},
+  "jest": {
+    "globalTeardown": "./tests/teardown.js",
+    "testEnvironment": "node"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
