@@ -1,11 +1,10 @@
 // tests/stories/adminEditsMessage.test.js
-
+require('../utils/testSetup');
 const request = require('supertest');
 const { app } = require('../../index');
 const { connectToTestMongo, disconnectTestMongo } = require('../utils/testMongo');
 
-beforeAll(connectToTestMongo);
-afterAll(disconnectTestMongo);
+
 
 describe('Admin edits a message sent by user', () => {
   const user = {
@@ -25,7 +24,7 @@ describe('Admin edits a message sent by user', () => {
     const msg = {
       senderType: 'user',
       content: 'Original message for admin edit test',
-      tags: 'admin,edit',
+      tags: ['admin,edit'],
       props: { origin: 'admin_test' }
     };
 
@@ -41,7 +40,7 @@ describe('Admin edits a message sent by user', () => {
     const updated = {
       senderType: 'user',
       content: 'Message successfully edited by admin',
-      tags: 'admin,edited',
+      tags: ['admin,edited'],
       props: { origin: 'admin_test' }
     };
 

@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Message.findByIdAndDelete(req.params.id);
-    res.status(200).json({ deleted:"deleted" });
+    res.status(204).json();
   } catch (err) {
     respondError(res, err, 500);
   }

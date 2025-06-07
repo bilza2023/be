@@ -24,7 +24,7 @@ const MessageSchema = z.object({
   userId: z.string().optional(),
   senderType: z.string(),
   content: z.string(),
-  tags: z.string().optional(),
+  tags: z.array(z.string()).optional(),
   props: z.any().optional(),
   createdAt: z.date().optional()
 });

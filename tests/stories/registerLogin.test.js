@@ -1,13 +1,11 @@
 // tests/stories/userOnboarding.test.js
 
+require('../utils/testSetup');
 const request = require('supertest');
 const { app } = require('../../index');
 // const connectToMongo = require('../../mongo');
 // const mongoose = require('mongoose');
-const { connectToTestMongo, disconnectTestMongo } = require('../utils/testMongo');
 
-beforeAll(() => connectToTestMongo(process.env.MONGO_URI));
-afterAll(() => disconnectTestMongo());
 
 
 describe('User Onboarding Story', () => {

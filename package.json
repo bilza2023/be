@@ -7,7 +7,7 @@
     "dev": "node --watch ./index.js",
     "start": "node ./index.js",
     "dev:db": "sudo docker run --rm -p 27017:27017 mongo",
-    "test": "dotenv -e .env.test -- jest"
+    "test": "dotenv -e .env.test -- jest  --runInBand"
   },
 "jest": {
   "globalTeardown": "./tests/teardown.js",

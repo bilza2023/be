@@ -1,11 +1,9 @@
 // tests/stories/messages.test.js
-
+require('../utils/testSetup');
 const request = require('supertest');
 const { app } = require('../../index');
 const { connectToTestMongo, disconnectTestMongo } = require('../utils/testMongo');
 
-beforeAll(connectToTestMongo);
-afterAll(disconnectTestMongo);
 
 describe('User Message Story', () => {
   const user = {
@@ -25,7 +23,7 @@ describe('User Message Story', () => {
     const messageData = {
       senderType: 'user',
       content: 'Hello, this is a test message!',
-      tags: 'test,story',
+     tags: ['test', 'external'],
       props: { origin: 'test_case' }
     };
 

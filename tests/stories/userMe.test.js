@@ -1,11 +1,13 @@
 // tests/stories/userMe.test.js
 
+require('../utils/testSetup');
 const request = require('supertest');
 const { app } = require('../../index');
 const { connectToTestMongo, disconnectTestMongo } = require('../utils/testMongo');
-
-beforeAll(connectToTestMongo);
-afterAll(disconnectTestMongo);
+// beforeAll(async () => {
+//   await connectToTestMongo();
+//   await User.deleteMany({});
+// });
 
 describe('User profile story - GET /users/me', () => {
   const user = {
