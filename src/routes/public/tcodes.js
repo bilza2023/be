@@ -8,7 +8,9 @@ const router = express.Router();
 router.get('/:id', async (req, res) => {
   try {
     const item = await Tcode.findById(req.params.id);
-    if (!item) return respondNotFound(res);
+    if (!item) {
+      return respondNotFound(res, `Tcode not found: ${req.params.id}`);
+    }
     respondOk(res, item);
   } catch (err) {
     respondError(res, err);

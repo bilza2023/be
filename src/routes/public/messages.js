@@ -3,7 +3,6 @@ const { Message } = require('../../../mongo/models');
 const { MessageSchema } = require('../../../mongo/zod');
 const { validateWith, respondCreated, respondError } = require('../../utils/restUtils');
 
-
 const router = express.Router();
 
 // POST /messages
@@ -13,7 +12,7 @@ router.post('/', async (req, res) => {
     const created = await Message.create(data);
     respondCreated(res, created);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 

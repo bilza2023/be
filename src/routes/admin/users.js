@@ -1,4 +1,3 @@
-// src/routes/admin/users.js
 const express = require('express');
 const { User } = require('../../../mongo/models');
 const {

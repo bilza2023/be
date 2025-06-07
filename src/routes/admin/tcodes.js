@@ -1,4 +1,3 @@
-// src/routes/admin/tcodes.js
 const express = require('express');
 const { Tcode } = require('../../../mongo/models');
 const { TcodeSchema } = require('../../../mongo/zod');
@@ -33,7 +32,7 @@ router.post('/', async (req, res) => {
     logAdminAction('/admin/tcodes', 'POST', created);
     respondCreated(res, created);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 
@@ -45,7 +44,7 @@ router.put('/:id', async (req, res) => {
     logAdminAction('/admin/tcodes', 'PUT', updated);
     respondOk(res, updated);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 
@@ -59,4 +58,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports  =  router;
+module.exports = router;

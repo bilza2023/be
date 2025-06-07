@@ -1,4 +1,3 @@
-// src/routes/admin/messages.js
 const express = require('express');
 const { Message } = require('../../../mongo/models');
 const { MessageSchema } = require('../../../mongo/zod');
@@ -10,7 +9,6 @@ const {
   respondError,
   respondNotFound
 } = require('../../utils/restUtils');
-
 
 const router = express.Router();
 
@@ -32,7 +30,7 @@ router.post('/', async (req, res) => {
     const created = await Message.create(data);
     respondCreated(res, created);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 
@@ -43,7 +41,7 @@ router.put('/:id', async (req, res) => {
     const updated = await Message.findByIdAndUpdate(req.params.id, data, { new: true });
     respondOk(res, updated);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 
@@ -51,10 +49,10 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Message.findByIdAndDelete(req.params.id);
-    res.status(204).json();
+    res.status(204).end();
   } catch (err) {
     respondError(res, err, 500);
   }
 });
 
-module.exports =  router;
+module.exports = router;

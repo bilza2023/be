@@ -1,4 +1,3 @@
-// src/routes/admin/subscriptions.js
 const express = require('express');
 const { Subscription } = require('../../../mongo/models');
 const { SubscriptionSchema } = require('../../../mongo/zod');
@@ -10,7 +9,6 @@ const {
   respondError,
   logAdminAction
 } = require('../../utils/restUtils');
-
 
 const router = express.Router();
 
@@ -33,7 +31,7 @@ router.post('/', async (req, res) => {
     logAdminAction('/admin/subscriptions', 'POST', created);
     respondCreated(res, created);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 
@@ -45,7 +43,7 @@ router.put('/:id', async (req, res) => {
     logAdminAction('/admin/subscriptions', 'PUT', updated);
     respondOk(res, updated);
   } catch (err) {
-    respondError(res, err);
+    respondError(res, err, 400);
   }
 });
 
