@@ -24,14 +24,15 @@ app.get('/', (req, res) => {
 });
 
 // Always connect to Mongo
-connectToMongo().then(() => {
-  if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test') {
+  connectToMongo().then(() => {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-  }
-});
+  });
+}
+
 
 
 
