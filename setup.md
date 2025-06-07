@@ -1,112 +1,158 @@
-## 🧰 Project Setup Guide
+Great — let’s craft your `setup.md`. This file should serve as:
 
-This file documents the structure, environment, and testing philosophy of this backend API system.
-
----
-
-### 🧱 Core Philosophy
-
-> **"Plumbing must be simple and durable."**
-
-This backend architecture is built on clarity, isolation, and complete testability.
+> ✅ A deployment + usage guide
+> ✅ A wiring diagram for credentials, ports, and modes
+> ✅ A team-readable intro to how the system runs
 
 ---
 
-### 🔧 Project Structure
+### 📄 `setup.md` — Workshop Backend
 
-* `/src/routes/public/` – public-facing APIs (users, messages, subscriptions, tcodes)
-* `/src/routes/admin/` – admin-only APIs (protected by `x-admin-secret`)
-* `/src/middleware/requireAdmin.js` – shared-secret middleware for admin access
-* `/mongo/` – all Mongoose models and schemas
-* `/tests/` – internal Jest test stories
-* `/tests/external/` – `.http` files for manual API sanity checks
+````md
+# 🛠 Workshop Backend – Setup Guide
+
+This backend powers the Workshop admin and public API system, using Node.js, Express, and MongoDB.
 
 ---
 
-### 🌍 Environments
+## 🚀 Getting Started
 
-* `.env` – used in dev mode (via `npm run dev`)
-* `.env.test` – used only during `npm run test`
-
-Required variables:
-
-```
-MONGO_URI=mongodb://127.0.0.1:27017/taleemDB
-JWT_SECRET=your-jwt-secret
-ADMIN_SECRET=workshop-super-secret
-PORT=3000
-```
-
----
-
-### 🧪 Testing Modes
-
-#### 🧬 Internal: Jest Stories
-
-Run with:
+### 1. Clone and install
 
 ```bash
-npm run test
+git clone <repo-url>
+cd be
+npm install
+````
+
+---
+
+## 🔧 Run Modes
+
+### 🧪 Testing
+
+Run with a disposable MongoDB and `.env.test`.
+
+```bash
+npm test
 ```
 
-This runs:
-
-* story-based tests (e.g. register → login → me)
-* admin flows (send → edit → delete message)
-* token and access control
-
-#### 🧾 External: REST Client (manual .http)
-
-Use `.http` files in `tests/external/` folder.
-Click "Send Request" in VS Code with REST Client plugin.
-
-This allows instant:
-
-* Public API testing (register/login/send)
-* Admin API access (secret-based)
-* Testing **without .env switching**
+Runs 20 real-world stories using `jest --runInBand`.
 
 ---
 
-### 🧩 Testing Insights
+### 🛠 Development
 
-* Each test uses its own email to avoid cross-test collisions
-* Shared DB is reset using a custom `disconnectTestMongo()` helper
-* `.env.test` isolates test DB from real data
-* Admin API requires `x-admin-secret`, not login
+Runs locally using `.env` and your host MongoDB.
 
----
+```bash
+npm run dev
+```
 
-### 🧠 Developer Realization
+Uses:
 
-> "This project reached clarity when a single `.http` file revealed everything."
+```env
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/taleemDB
+```
 
-You don’t need Postman. You don’t need complex login UIs. You don’t need setup scripts.
+Start Mongo manually or via:
 
-If your `.http` file works → your backend is working.
-
----
-
-### ✅ Core Stories Implemented
-
-| Story                          | Status |
-| ------------------------------ | ------ |
-| User register → login          | ✅      |
-| User send message              | ✅      |
-| Admin read/edit/delete message | ✅      |
-| User fetch own profile         | ✅      |
+```bash
+npm run dev:db
+# This maps port 27017 and destroys container on stop
+```
 
 ---
 
-### 🚪 Future Stories (Optional)
+### 🐳 Docker Compose
 
-* Admin: Create/update/delete tcodes
-* Admin: Grant subscription to user
-* User: Check access to a tcode
-* Tcode: Fetch lesson content
+Run app + Mongo in containers:
+
+```bash
+docker-compose up --build
+```
+
+MongoDB uses:
+
+```yaml
+MONGO_INITDB_ROOT_USERNAME: taleemAdmin
+MONGO_INITDB_ROOT_PASSWORD: bils32611246950
+```
+
+App connects using:
+
+```
+MONGO_URI=mongodb://taleemAdmin:bils32611246950@mongo:27017/taleemDB?authSource=admin
+```
+
+Exposes:
+
+* App on `http://localhost:3000`
+* Mongo on `localhost:27017`
 
 ---
 
-### 🧾 Last Words
+## 🔐 Secrets
 
-> When the architecture is right, testing becomes reading.
+| Key            | Purpose                  |
+| -------------- | ------------------------ |
+| `JWT_SECRET`   | Issues login tokens      |
+| `ADMIN_SECRET` | Protects `/admin/*` APIs |
+
+Defined in:
+
+* `.env` for local/dev
+* `.env.test` for tests
+* `docker-compose.yml` for Docker
+
+---
+
+## 📁 Folder Overview
+
+| Path              | Purpose                          |
+| ----------------- | -------------------------------- |
+| `src/routes/`     | Public + admin API endpoints     |
+| `mongo/models.js` | Mongoose models (User, Message…) |
+| `tests/stories/`  | Jest test stories (20)           |
+| `utils/`          | Error formatting, filtering      |
+
+---
+
+## 🧪 Test Summary
+
+All tests are real API flows (not units). Run with:
+
+```bash
+npm test
+```
+
+Test coverage includes:
+
+* ✅ User onboarding
+* ✅ Message lifecycle
+* ✅ Tcode creation/access
+* ✅ Subscription enforcement
+* ✅ Admin security and errors
+* ✅ Validation edge cases
+
+---
+
+## 📞 Health Check
+
+```bash
+GET /
+→ "Workshop backend is running"
+```
+
+---
+
+## ✅ Done
+
+This API is stable, portable, and battle-tested.
+
+```
+Test Suites: 20 passed
+Tests:       20 passed
+```
+

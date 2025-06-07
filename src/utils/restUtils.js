@@ -43,7 +43,6 @@ function respondNotFound(res, message = 'Not found') {
     timestamp: new Date().toISOString()
   });
 }
-
 // ✅ Main error handler
 function respondError(res, err, status = 500) {
   const timestamp = new Date().toISOString();
@@ -70,6 +69,11 @@ function respondError(res, err, status = 500) {
       details = `Duplicate ${field}`;
     } else {
       details = err.message || details;
+
+      // 🔒 Fallback: if status explicitly set to 401, treat as auth error
+      if (status === 401) {
+        errorType = ErrorTypes.AUTHENTICATION;
+      }
     }
   }
 
@@ -86,9 +90,10 @@ function respondError(res, err, status = 500) {
   });
 }
 
+
 // ✅ Admin logging (optional, keep for audit/debug)
 function logAdminAction(route, method, payload) {
-  console.log(`🛠 Admin [${method}] ${route}`, JSON.stringify(payload, null, 2));
+  // console.log(`🛠 Admin [${method}] ${route}`, JSON.stringify(payload, null, 2));
 }
 
 // 🧱 Internal helper
